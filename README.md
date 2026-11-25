@@ -4,6 +4,10 @@
 
 ![Экран](screenshots/screen.png)
 
+## Для каких экранов подходит
+
+Для мини-экрана мониторинга, который ставят в системный блок или рядом с монитором: **TURZX 3.5"**, **Turing Smart Screen 3.5 дюйма**, **UsbPCMonitor 3.5"**. Обычно к такому экрану прилагается штатная программа **UsbMonitor** (архив **35inchENG**), а в Windows он определяется как USB-устройство с COM-портом (VID 1A86, PID 5722, серийный номер **USB35INCHIPSV2**). TuringScreen Grid3 заменяет UsbMonitor: показывает температуру процессора и видеокарты, загрузку, обороты вентиляторов, память, два SSD, сеть и время, работает без Python и настраивается в окне на русском или английском. Подходит тем, кто ищет программу для экрана температуры в корпусе ПК, замену UsbMonitor или бесплатную альтернативу панели датчиков AIDA64 для такого экрана.
+
 ## Что показывает
 
 - **CPU:** температура, частота, загрузка, обороты вентилятора, мощность.
@@ -65,6 +69,8 @@
 ---
 
 ## English
+
+**Which screens:** the small USB system-monitor screens sold as **TURZX 3.5"**, **Turing Smart Screen 3.5 inch** or **UsbPCMonitor 3.5"**, normally shipped with the *UsbMonitor* / *35inchENG* software and seen by Windows as a USB serial (COM port) device with VID 1A86, PID 5722 and serial number **USB35INCHIPSV2**. If you are looking for a UsbMonitor replacement, a CPU/GPU temperature display for your PC case, or a free alternative to an AIDA64 sensor panel for this screen, this is it.
 
 **TuringScreen Grid3** is a standalone Windows replacement for the stock *UsbMonitor* software of the **Turing Smart Screen / TURZX 3.5" (revision A)**. It is built on [turing-smart-screen-python](https://github.com/mathoudebine/turing-smart-screen-python) and packaged with PyInstaller: one folder, no Python required.
 
