@@ -19,8 +19,11 @@ import time
 from xml.sax.saxutils import escape
 
 TASK = 'TuringScreen'
-TITLE = 'Экран Turing'
-SHORTCUT = 'Экран Turing.lnk'
+from i18n import t as _, STR as _STR
+
+TITLE = _('title')
+SHORTCUT = _('shortcut')
+ALL_SHORTCUTS = sorted({d['shortcut'] for d in _STR.values()})
 WAIT_SCREEN_SECONDS = 120
 CREATE_NO_WINDOW = 0x08000000
 
@@ -122,12 +125,12 @@ def task_xml() -> str:
 
 
 def shortcut(create: bool):
+    names = ','.join('"%s"' % n for n in ALL_SHORTCUTS)
+    ps = ('$d=[Environment]::GetFolderPath("Desktop");'
+          f'foreach($n in @({names})){{Remove-Item -ErrorAction SilentlyContinue (Join-Path $d $n)}};')
     if create:
-        ps = ('$d=[Environment]::GetFolderPath("Desktop");'
-              f'$s=(New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path $d "{SHORTCUT}"));'
-              f'$s.TargetPath="{EXE}";$s.WorkingDirectory="{HERE}";$s.IconLocation="{EXE},0";$s.Save()')
-    else:
-        ps = f'$d=[Environment]::GetFolderPath("Desktop");Remove-Item -ErrorAction SilentlyContinue (Join-Path $d "{SHORTCUT}")'
+        ps += (f'$s=(New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path $d "{SHORTCUT}"));'
+               f'$s.TargetPath="{EXE}";$s.WorkingDirectory="{HERE}";$s.IconLocation="{EXE},0";$s.Save()')
     return run(['powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command', ps])
 
 
@@ -142,7 +145,7 @@ def install():
         pass
     log('install: task %s %s' % (code, out.strip()))
     if code != 0:
-        message('Не удалось настроить автозапуск:\n' + out.strip(), warning=True)
+        message(_('msg_autostart_failed') + out.strip(), warning=True)
         return False
     c2, _ = run(['schtasks', '/Change', '/TN', 'UsbMonitor', '/DISABLE'])
     log('install: UsbMonitor autostart disabled' if c2 == 0 else 'install: UsbMonitor task not found')
@@ -152,11 +155,7 @@ def install():
         open(os.path.join(HERE, 'first_run.flag'), 'w').close()
     except OSError:
         pass
-    message('Готово.\n\nПрограмма экрана будет запускаться сама при входе в Windows.\n'
-            'Ярлык «Экран Turing» на рабочем столе запускает её вручную.\n'
-            'Автозапуск штатной программы UsbMonitor отключён.\n\n'
-            'Сейчас откроется окно настроек: выберите диски и вентилятор.\n'
-            'Потом оно открывается щелчком по значку программы в трее.')
+    message(_('msg_installed'))
     run(['schtasks', '/Run', '/TN', TASK])
     return True
 
@@ -166,7 +165,7 @@ def uninstall():
     run(['schtasks', '/Change', '/TN', 'UsbMonitor', '/ENABLE'])
     shortcut(False)
     log('uninstall done')
-    message('Автозапуск убран, ярлык удалён, автозапуск UsbMonitor включён обратно.')
+    message(_('msg_uninstalled'))
 
 
 # ---------------------------------------------------------------- monitor
@@ -222,7 +221,7 @@ def monitor():
     _mutex = kernel32.CreateMutexW(None, False, 'Local\\TuringScreenMonitor')
     if ctypes.get_last_error() == 183:  # ERROR_ALREADY_EXISTS
         log('already running, exit')
-        message('Программа экрана уже работает.\nЗначок в трее: щелчок открывает настройки, правая кнопка > Выход.')
+        message(_('msg_running'))
         return
 
     log('start')
@@ -244,8 +243,7 @@ def monitor():
             time.sleep(1)
         if not port:
             log('screen not found')
-            message('Экран не найден на USB.\n\nВыньте USB-кабель экрана на полминуты, вставьте обратно '
-                    'и запустите ярлык «Экран Turing» ещё раз.', warning=True)
+            message(_('msg_no_screen'), warning=True)
             return
         log('screen on %s' % port)
         time.sleep(2)
@@ -258,7 +256,7 @@ def monitor():
         pass
     except Exception as e:
         log('main crashed: %r' % e)
-        message('Программа экрана остановилась с ошибкой:\n%r\n\nПодробности в log.log' % e, warning=True)
+        message(_('msg_crashed') % e, warning=True)
     log('stop')
 
 
@@ -270,7 +268,7 @@ if __name__ == '__main__':
         if is_admin():
             install()
         elif not elevate('--install'):
-            message('Для первой настройки нужны права администратора.', warning=True)
+            message(_('msg_need_admin'), warning=True)
     elif arg == '--uninstall':
         if is_admin():
             uninstall()
@@ -281,8 +279,8 @@ if __name__ == '__main__':
             code, out = run(['schtasks', '/Run', '/TN', TASK])
             if code != 0:
                 log('task run failed: %s' % out.strip())
-                message('Не удалось запустить программу экрана:\n' + out.strip(), warning=True)
+                message(_('msg_run_failed') + out.strip(), warning=True)
         elif is_admin():
             install()
         elif not elevate('--install'):
-            message('Для первой настройки нужны права администратора.', warning=True)
+            message(_('msg_need_admin'), warning=True)

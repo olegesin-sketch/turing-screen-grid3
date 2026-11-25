@@ -30,6 +30,7 @@ from library.pythoncheck import check_python_version
 check_python_version()
 
 import os
+from i18n import t as _tr
 import sys
 
 try:
@@ -194,16 +195,16 @@ if __name__ == "__main__":
     try:
         tray_icon = pystray.Icon(
             name='Turing System Monitor',
-            title='Экран Turing (щелчок: настройки)',
+            title=_tr('tray_title'),
             icon=Image.open(MAIN_DIRECTORY / "res/icons/monitor-icon-17865/64.png"),
             menu=pystray.Menu(
                 pystray.MenuItem(
-                    text='Настройки',
+                    text=_tr('tray_settings'),
                     action=on_settings_tray,
                     default=True),
                 pystray.Menu.SEPARATOR,
                 pystray.MenuItem(
-                    text='Выход',
+                    text=_tr('tray_exit'),
                     action=on_exit_tray)
             )
         )

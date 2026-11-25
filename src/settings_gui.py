@@ -14,8 +14,10 @@ import threading
 
 CREATE_NO_WINDOW = 0x08000000
 TASK = 'TuringScreen'
-AUTO = 'Авто'
-NONE = 'Не показывать'
+from i18n import t as _
+
+AUTO = _('auto')
+NONE = _('none')
 
 _window_open = threading.Lock()
 
@@ -53,7 +55,7 @@ def list_disks():
                 if t is not None:
                     info.append('%.0f °C' % t)
                 if u is not None:
-                    info.append('занято %.0f %%' % u)
+                    info.append(_('used_pct') % u)
                 name = str(h.Name).strip()
                 out.append((name, name + ('   (' + ', '.join(info) + ')' if info else '')))
         except Exception:
@@ -84,7 +86,7 @@ def list_fans():
                 sh.Update()
                 for s in sh.Sensors:
                     if s.SensorType == lhm.Hardware.SensorType.Fan and s.Value is not None:
-                        out.append((str(s.Name), '%s   (%.0f об/мин)' % (s.Name, float(s.Value))))
+                        out.append((str(s.Name), _('rpm') % (s.Name, float(s.Value))))
     except Exception:
         pass
     return out
@@ -161,7 +163,7 @@ def _window(restart_cb):
     fans = list_fans()
 
     root = tk.Tk()
-    root.title('Экран Turing: настройки')
+    root.title(_('win_title'))
     root.resizable(False, False)
     try:
         root.iconbitmap(os.path.join(str(config.MAIN_DIRECTORY), 'res', 'icons', 'monitor-icon-17865', 'icon.ico'))
@@ -192,7 +194,7 @@ def _window(restart_cb):
         return labels[0]
 
     # disks
-    ttk.Label(frm, text='Диски', font=('Segoe UI', 10, 'bold')).grid(row=0, column=0, columnspan=2, sticky='w')
+    ttk.Label(frm, text=_('disks'), font=('Segoe UI', 10, 'bold')).grid(row=0, column=0, columnspan=2, sticky='w')
     d1_labels, d1_values = choice_list(disks, [AUTO])
     d2_labels, d2_values = choice_list(disks, [AUTO, NONE])
     ttk.Label(frm, text='SSD 1:').grid(row=1, column=0, sticky='w', **pad)
@@ -203,29 +205,28 @@ def _window(restart_cb):
     ssd2 = ttk.Combobox(frm, values=d2_labels, state='readonly', width=58)
     ssd2.set(current_label(d2_labels, d2_values, cfg.get('SSD2_MATCH', '')))
     ssd2.grid(row=2, column=1, sticky='w', **pad)
-    ttk.Label(frm, text='Рядом с каждым диском его текущая температура и заполненность. '
-                        '«Авто»: первый и второй диск по порядку Windows.',
+    ttk.Label(frm, text=_('disks_hint'),
               foreground='#666', wraplength=430).grid(row=3, column=1, sticky='w', padx=10)
 
     # fan
-    ttk.Label(frm, text='Вентилятор процессора', font=('Segoe UI', 10, 'bold')).grid(
+    ttk.Label(frm, text=_('fan'), font=('Segoe UI', 10, 'bold')).grid(
         row=4, column=0, columnspan=2, sticky='w', pady=(14, 0))
     f_labels, f_values = choice_list(fans, [AUTO])
-    ttk.Label(frm, text='Датчик:').grid(row=5, column=0, sticky='w', **pad)
+    ttk.Label(frm, text=_('sensor')).grid(row=5, column=0, sticky='w', **pad)
     fan = ttk.Combobox(frm, values=f_labels, state='readonly', width=58)
     cur_fan = cfg.get('CPU_FAN_SENSOR', '')
     fan.set(next((lab for lab, val in zip(f_labels, f_values) if val and val.lower() == str(cur_fan).lower()),
                  f_labels[0]))
     fan.grid(row=5, column=1, sticky='w', **pad)
-    ttk.Label(frm, text='Выберите датчик, обороты которого похожи на обороты кулера процессора.',
+    ttk.Label(frm, text=_('fan_hint'),
               foreground='#666', wraplength=430).grid(row=6, column=1, sticky='w', padx=10)
 
     # memory temperature
-    ttk.Label(frm, text='Память', font=('Segoe UI', 10, 'bold')).grid(
+    ttk.Label(frm, text=_('memory'), font=('Segoe UI', 10, 'bold')).grid(
         row=7, column=0, columnspan=2, sticky='w', pady=(14, 0))
     ram_initial = str(cfg.get('RAM_TEMP', False)).strip().lower() in ('true', '1', 'yes')
     ram = tk.BooleanVar(value=ram_initial)
-    ttk.Checkbutton(frm, text='Показывать температуру памяти (DDR)', variable=ram).grid(
+    ttk.Checkbutton(frm, text=_('ram_check'), variable=ram).grid(
         row=8, column=1, sticky='w', **pad)
     try:
         from library.sensors.sensors_custom import read_ram_temps
@@ -233,15 +234,14 @@ def _window(restart_cb):
     except Exception:
         temps = []
     if temps:
-        ram_hint = ('Найдено датчиков на планках: %d (%s). На экране: temp 1 и temp 2, первые две планки.'
+        ram_hint = (_('ram_found')
                     % (len(temps), ', '.join('%.0f °C' % t for t in temps)))
     else:
-        ram_hint = ('Датчик на планках не найден, на экране будут прочерки. '
-                    'Датчик есть на всех DDR5, на большинстве DDR4 его нет.')
+        ram_hint = _('ram_none')
     ttk.Label(frm, text=ram_hint, foreground='#666', wraplength=430).grid(row=9, column=1, sticky='w', padx=10)
 
     # user temperature sensors
-    ttk.Label(frm, text='Свой датчик температуры', font=('Segoe UI', 10, 'bold')).grid(
+    ttk.Label(frm, text=_('extra'), font=('Segoe UI', 10, 'bold')).grid(
         row=10, column=0, columnspan=2, sticky='w', pady=(14, 0))
     temp_items = []
 
@@ -257,7 +257,7 @@ def _window(restart_cb):
     for n in (1,):
         rowf = ttk.Frame(frm)
         rowf.grid(row=10 + n, column=1, sticky='w', **pad)
-        ttk.Label(frm, text='Датчик:').grid(row=10 + n, column=0, sticky='w', **pad)
+        ttk.Label(frm, text=_('sensor')).grid(row=10 + n, column=0, sticky='w', **pad)
         lab = tk.StringVar(value=str(cfg.get('EXTRA_LABEL_%d' % n, 'air') or 'air'))
         ttk.Entry(rowf, textvariable=lab, width=8).pack(side='left')
         cb = ttk.Combobox(rowf, state='readonly', width=46)
@@ -281,16 +281,14 @@ def _window(restart_cb):
 
     hint = ttk.Frame(frm)
     hint.grid(row=12, column=1, sticky='w', padx=10)
-    ttk.Label(hint, text='Слева подпись на экране (латиницей, до 7 знаков), справа датчик. '
-                         'Какой датчик ваш? Зажмите его в пальцах на полминуты и нажмите «Обновить»: '
-                         'у нужного температура заметно вырастет.',
+    ttk.Label(hint, text=_('extra_hint'),
               foreground='#666', wraplength=330).pack(side='left')
-    ttk.Button(hint, text='Обновить', command=lambda: (load_temps(), fill_temps())).pack(side='left', padx=8)
+    ttk.Button(hint, text=_('refresh'), command=lambda: (load_temps(), fill_temps())).pack(side='left', padx=8)
 
     # screen
-    ttk.Label(frm, text='Экран', font=('Segoe UI', 10, 'bold')).grid(
+    ttk.Label(frm, text=_('screen'), font=('Segoe UI', 10, 'bold')).grid(
         row=13, column=0, columnspan=2, sticky='w', pady=(14, 0))
-    ttk.Label(frm, text='Яркость:').grid(row=14, column=0, sticky='w', **pad)
+    ttk.Label(frm, text=_('brightness')).grid(row=14, column=0, sticky='w', **pad)
     bright_frame = ttk.Frame(frm)
     bright_frame.grid(row=14, column=1, sticky='w', **pad)
     bright = tk.IntVar(value=int(disp.get('BRIGHTNESS', 20)))
@@ -312,16 +310,25 @@ def _window(restart_cb):
     bright_lbl.pack(side='left', padx=8)
     bright_lbl.config(text='%d %%' % bright.get())
     bright_frame.bind_all('<ButtonRelease-1>', lambda e: on_bright() if e.widget.winfo_class() == 'TScale' else None)
-    ttk.Label(frm, text='Выше 50 % экран заметно греется.', foreground='#666').grid(row=15, column=1, sticky='w', padx=10)
+    ttk.Label(frm, text=_('bright_hint'), foreground='#666').grid(row=15, column=1, sticky='w', padx=10)
 
     reverse = tk.BooleanVar(value=bool(disp.get('DISPLAY_REVERSE', False)))
-    ttk.Checkbutton(frm, text='Повернуть изображение на 180°', variable=reverse).grid(
+    ttk.Checkbutton(frm, text=_('reverse'), variable=reverse).grid(
         row=16, column=1, sticky='w', **pad)
 
     autostart_initial = autostart_enabled()
     autostart = tk.BooleanVar(value=autostart_initial)
-    ttk.Checkbutton(frm, text='Запускать при входе в Windows', variable=autostart).grid(
+    ttk.Checkbutton(frm, text=_('autostart'), variable=autostart).grid(
         row=17, column=1, sticky='w', **pad)
+
+    import i18n
+    lang_values = ['auto', 'ru', 'en']
+    lang_labels = [_('lang_auto'), 'Русский', 'English']
+    lang_initial = i18n.setting()
+    ttk.Label(frm, text=_('language')).grid(row=18, column=0, sticky='w', **pad)
+    lang_cb = ttk.Combobox(frm, values=lang_labels, state='readonly', width=24)
+    lang_cb.current(lang_values.index(lang_initial))
+    lang_cb.grid(row=18, column=1, sticky='w', **pad)
 
     def save():
         m1 = d1_values[d1_labels.index(ssd1.get())] if ssd1.get() in d1_labels else ''
@@ -339,14 +346,15 @@ def _window(restart_cb):
             extra_vals['EXTRA_LABEL_%d' % n] = label
             if bool(sid) != bool(initial) or (sid and label != str(cfg.get('EXTRA_LABEL_%d' % n, '')) ):
                 extra_changed = True
+        lang_new = lang_values[lang_cb.current()] if lang_cb.current() >= 0 else 'auto'
         need_restart = (rev != bool(disp.get('DISPLAY_REVERSE', False)) or ram_on != ram_initial
-                        or extra_changed)
+                        or extra_changed or lang_new != lang_initial)
         try:
             save_config({'SSD1_MATCH': m1, 'SSD2_MATCH': m2, 'CPU_FAN_SENSOR': fv,
                          'BRIGHTNESS': b, 'DISPLAY_REVERSE': rev, 'RAM_TEMP': ram_on,
-                         **extra_vals})
+                         'LANGUAGE': lang_new, **extra_vals})
         except Exception as e:
-            messagebox.showerror('Экран Turing', 'Не удалось сохранить config.yaml:\n%r' % e, parent=root)
+            messagebox.showerror(_('title'), _('save_failed') % e, parent=root)
             return
         # apply at once (custom sensors read these values on every update)
         cfg['SSD1_MATCH'], cfg['SSD2_MATCH'], cfg['CPU_FAN_SENSOR'] = m1, m2, fv
@@ -360,7 +368,7 @@ def _window(restart_cb):
             restart_cb()
 
     btns = ttk.Frame(frm)
-    btns.grid(row=18, column=0, columnspan=2, sticky='e', pady=(16, 0))
+    btns.grid(row=19, column=0, columnspan=2, sticky='e', pady=(16, 0))
 
     def cancel():
         try:  # restore brightness if it was changed but not saved
@@ -370,8 +378,8 @@ def _window(restart_cb):
             pass
         root.destroy()
 
-    ttk.Button(btns, text='Отмена', command=cancel).pack(side='right', padx=4)
-    ttk.Button(btns, text='Сохранить', command=save).pack(side='right', padx=4)
+    ttk.Button(btns, text=_('cancel'), command=cancel).pack(side='right', padx=4)
+    ttk.Button(btns, text=_('save'), command=save).pack(side='right', padx=4)
     root.protocol('WM_DELETE_WINDOW', cancel)
     root.mainloop()
 

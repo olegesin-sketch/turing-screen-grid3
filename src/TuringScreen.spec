@@ -6,7 +6,7 @@ a = Analysis(
     pathex=['.'],
     binaries=[],
     datas=[('build_res\\res', 'res'), ('config.yaml', '.'), ('external', 'external')],
-    hiddenimports=['main', 'win32evtlog', 'settings_gui', 'tkinter', 'tkinter.ttk', 'tkinter.messagebox', 'PIL', 'PIL._imagingtk', 'PIL._tkinter_finder', 'pystray._win32',
+    hiddenimports=['main', 'i18n', 'win32evtlog', 'settings_gui', 'tkinter', 'tkinter.ttk', 'tkinter.messagebox', 'PIL', 'PIL._imagingtk', 'PIL._tkinter_finder', 'pystray._win32',
                    'clr', 'clr_loader', 'pythonnet', 'serial.tools.list_ports_windows',
                    'library.sensors.sensors_librehardwaremonitor', 'library.sensors.sensors_python',
                    'library.sensors.sensors_stub_static', 'library.sensors.sensors_stub_random',

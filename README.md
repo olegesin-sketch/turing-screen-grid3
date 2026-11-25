@@ -34,6 +34,7 @@
 - **Память:** показывать ли температуру планок.
 - **Свой датчик температуры:** подпись (латиницей, до 7 знаков) и датчик платы или контроллера. Чтобы найти свой, зажмите датчик пальцами на полминуты и нажмите «Обновить».
 - **Яркость, поворот на 180°, автозапуск.**
+- **Язык / Language:** интерфейс на русском или английском; по умолчанию как в Windows.
 
 Выход и перезапуск: значок в трее, правая кнопка. Журналы `launcher.log` и `log.log` лежат в папке программы.
 
@@ -67,8 +68,12 @@
 
 **TuringScreen Grid3** is a standalone Windows replacement for the stock *UsbMonitor* software of the **Turing Smart Screen / TURZX 3.5" (revision A)**. It is built on [turing-smart-screen-python](https://github.com/mathoudebine/turing-smart-screen-python) and packaged with PyInstaller: one folder, no Python required.
 
+The interface (settings window, tray menu, messages) is available in **English and Russian**; by default it follows the Windows display language and can be switched in the settings.
+
+![Settings](screenshots/settings_en.png)
+
 Features: CPU/GPU/RAM stats, **two SSDs** (temperature and used space), optional RAM module temperatures, uptime since power-on and since last restart, one user-defined temperature sensor with a custom label, network speed, and a settings window (tray icon click) to pick disks, fan and sensors. Autostart is done via Task Scheduler, so there is no UAC prompt on every start.
 
 This program was created with the help of **[Claude](https://claude.ai)**, an AI assistant by Anthropic: the code, theme and build were written by Claude at the request of the repository owner, who defined the tasks, approved the screen layouts and tested it on real hardware.
 
-Install: install the [PawnIO](https://pawnio.eu) driver, download the release archive, unpack it to a permanent folder, run `TuringScreen.exe` once and allow admin rights. Build from source: run `build.bat` (Python 3.11 + git). License: GPL-3.0, same as the base project.
+Install: install the [PawnIO](https://pawnio.eu) driver, download the release archive, unpack it to a permanent folder, run `TuringScreen.exe` once and allow admin rights. Step-by-step instructions are in `INSTRUCTIONS_EN.txt` inside the archive. Build from source: run `build.bat` (Python 3.11 + git). License: GPL-3.0, same as the base project.

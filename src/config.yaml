@@ -45,6 +45,8 @@ config:
   # Empty sensor = row hidden. Label: Latin letters, up to 7 characters.
   EXTRA_SENSOR_1: ""
   EXTRA_LABEL_1: "air"
+  # Interface language: auto (as in Windows), ru or en
+  LANGUAGE: auto
 
   # Address used for ping sensor. Can be internal/external IP (e.g. 8.8.8.8 or 192.168.0.1) or hostname (google.com)
   PING: 8.8.8.8
