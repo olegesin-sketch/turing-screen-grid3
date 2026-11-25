@@ -49,6 +49,10 @@
 
 Тему (`src/res/themes/Grid3_2SSD`) создаёт скрипт `tools/gen_theme.py`; координаты строк и подписи меняются в нём.
 
+## Как сделано
+
+Программа создана с помощью **[Claude](https://claude.ai)**, ИИ-ассистента компании Anthropic. Код, тему и сборку написал Claude по запросам автора репозитория; автор ставил задачи, согласовывал макеты экрана и проверял работу на реальном железе.
+
 ## Благодарности и лицензия
 
 Основано на [turing-smart-screen-python](https://github.com/mathoudebine/turing-smart-screen-python) (Matthieu Houdebine и соавторы). Датчики читаются через [LibreHardwareMonitor](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor). Подробности о сторонних компонентах: [THIRD_PARTY.md](THIRD_PARTY.md).
@@ -64,5 +68,7 @@
 **TuringScreen Grid3** is a standalone Windows replacement for the stock *UsbMonitor* software of the **Turing Smart Screen / TURZX 3.5" (revision A)**. It is built on [turing-smart-screen-python](https://github.com/mathoudebine/turing-smart-screen-python) and packaged with PyInstaller: one folder, no Python required.
 
 Features: CPU/GPU/RAM stats, **two SSDs** (temperature and used space), optional RAM module temperatures, uptime since power-on and since last restart, one user-defined temperature sensor with a custom label, network speed, and a settings window (tray icon click) to pick disks, fan and sensors. Autostart is done via Task Scheduler, so there is no UAC prompt on every start.
+
+This program was created with the help of **[Claude](https://claude.ai)**, an AI assistant by Anthropic: the code, theme and build were written by Claude at the request of the repository owner, who defined the tasks, approved the screen layouts and tested it on real hardware.
 
 Install: install the [PawnIO](https://pawnio.eu) driver, download the release archive, unpack it to a permanent folder, run `TuringScreen.exe` once and allow admin rights. Build from source: run `build.bat` (Python 3.11 + git). License: GPL-3.0, same as the base project.
