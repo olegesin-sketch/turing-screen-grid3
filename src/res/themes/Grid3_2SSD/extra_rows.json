@@ -1,0 +1,16 @@
+{
+ "font": "fonts/oswald/Oswald-Medium.ttf",
+ "size": 18,
+ "color": [
+  0,
+  0,
+  0
+ ],
+ "rows": [
+  {
+   "label_x": 334,
+   "unit_x": 456,
+   "baseline": 193
+  }
+ ]
+}

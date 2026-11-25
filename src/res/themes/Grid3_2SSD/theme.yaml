@@ -1,0 +1,344 @@
+---
+# Grid3_2SSD: three columns (CPU/GPU | RAM/SSD 1/SSD 2 | time/date/network) for Turing 3.5" (rev. A), landscape.
+# Values marked as CUSTOM come from classes in library/sensors/sensors_custom.py (block "Grid3_2SSD").
+author: "TuringScreen Grid3_2SSD"
+
+display:
+  DISPLAY_SIZE: 3.5"
+  DISPLAY_ORIENTATION: landscape
+  DISPLAY_RGB_LED: 0, 0, 255
+
+static_images:
+  BACKGROUND:
+    PATH: background.png
+    X: 0
+    Y: 0
+    WIDTH: 480
+    HEIGHT: 320
+
+STATS:
+  CPU:
+    TEMPERATURE:
+      INTERVAL: 2
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 68
+        Y: 33
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    FREQUENCY:
+      INTERVAL: 2
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 68
+        Y: 60
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    PERCENTAGE:
+      INTERVAL: 1
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 68
+        Y: 87
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+  GPU:
+    INTERVAL: 1
+    TEMPERATURE:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 68
+        Y: 201
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    MEMORY_USED:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 68
+        Y: 228
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    PERCENTAGE:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 68
+        Y: 255
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+  MEMORY:
+    INTERVAL: 2
+    VIRTUAL:
+      USED:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 230
+        Y: 33
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+      PERCENT_TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 230
+        Y: 60
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+  DATE:
+    INTERVAL: 1
+    HOUR:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 334
+        Y: 35
+        WIDTH: 140
+        HEIGHT: 44
+        ANCHOR: lm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 40
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+        FORMAT: "HH:mm"
+    DAY:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 334
+        Y: 78
+        WIDTH: 140
+        HEIGHT: 26
+        ANCHOR: lm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 22
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+        FORMAT: "dd.MM.yyyy"
+  CUSTOM:
+    INTERVAL: 2
+    CpuFanRpm:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 68
+        Y: 114
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    CpuPower:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 68
+        Y: 141
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    GpuFanRpm:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 68
+        Y: 282
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    RamTemp1:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 230
+        Y: 87
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    RamTemp2:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 230
+        Y: 114
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    Ssd1Temp:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 230
+        Y: 172
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    Ssd1Used:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 230
+        Y: 199
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    Ssd2Temp:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 230
+        Y: 257
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    Ssd2Used:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 230
+        Y: 284
+        WIDTH: 54
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    UptimeOn:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 384
+        Y: 104
+        WIDTH: 90
+        HEIGHT: 22
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 18
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    UptimeReboot:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 384
+        Y: 126
+        WIDTH: 90
+        HEIGHT: 22
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 18
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    ExtraTemp1:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 384
+        Y: 175
+        WIDTH: 66
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    NetUp:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 392
+        Y: 257
+        WIDTH: 40
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
+    NetDown:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: False
+        X: 392
+        Y: 284
+        WIDTH: 40
+        HEIGHT: 23
+        ANCHOR: rm
+        FONT: geforce/GeForce-Bold.ttf
+        FONT_SIZE: 19
+        FONT_COLOR: 0, 0, 0
+        BACKGROUND_IMAGE: background.png
